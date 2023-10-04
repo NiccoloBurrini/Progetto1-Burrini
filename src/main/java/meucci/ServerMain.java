@@ -1,4 +1,4 @@
-package itismeucci.tpsit;
+package meucci;
 
 public class ServerMain {
     public static void main(String[] args) {

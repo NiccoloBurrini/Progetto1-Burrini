@@ -1,4 +1,4 @@
-package itismeucci.tpsit;
+package meucci;
 
 import java.io.*;
 import java.net.*;
@@ -25,7 +25,7 @@ public class Server {
 
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
-            stdIn = new BufferedReader(new InputStreamReader(System.in));
+
 
             System.out.println("Client connesso sulla porta: " + port);
 
@@ -37,8 +37,10 @@ public class Server {
 
         try {
             while (true) {
-                System.out.println("Client: " + in.readLine());
-                out.println(stdIn.readLine().toUpperCase());
+                String stringaRicevuta = in.readLine();
+                System.out.println("Client: " + stringaRicevuta);
+                out.println(stringaRicevuta.toUpperCase());
+
             }
 
         } catch (Exception e) {

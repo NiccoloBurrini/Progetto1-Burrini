@@ -1,4 +1,4 @@
-package itismeucci.tpsit;
+package meucci;
 
 public class ClientMain {
     public static void main(String[] args) {

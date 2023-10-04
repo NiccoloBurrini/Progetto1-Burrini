@@ -1,4 +1,4 @@
-package itismeucci.tpsit;
+package meucci;
 
 import java.io.*;
 import java.net.*;
@@ -26,6 +26,10 @@ public class Client {
             out = new PrintWriter(client.getOutputStream(), true);
             stdIn = new BufferedReader(new InputStreamReader(System.in));
 
+            System.out.println("Connesso al server con IP: " + serverAddress +":"+serverPort);
+
+            client.close();
+
         } catch (UnknownHostException e) {
             System.err.println("Host sconosciuto");
 
@@ -35,6 +39,7 @@ public class Client {
             System.exit(1);
         }
 
+        
         return client;
     }
 
@@ -45,7 +50,7 @@ public class Client {
         try {
             while((userInput = stdIn.readLine()) != null){
                 out.println(userInput);
-                System.out.println("Server: " + in.readLine().toUpperCase());
+                System.out.println("Server: " + in.readLine());
             }
         
         } catch (IOException e) {
