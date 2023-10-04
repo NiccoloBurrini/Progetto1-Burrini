@@ -23,6 +23,10 @@ public class Server {
 
             client = server.accept();
 
+            server.close();
+
+
+
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
 
@@ -36,13 +40,13 @@ public class Server {
     public void communicate() {
 
         try {
-            while (true) {
                 String stringaRicevuta = in.readLine();
                 System.out.println("Client: " + stringaRicevuta);
                 out.println(stringaRicevuta.toUpperCase());
+                out.println("Connessione al server chiusa");
 
-            }
-
+                client.close();
+                
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("ERRORE");
