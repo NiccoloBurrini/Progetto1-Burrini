@@ -28,7 +28,6 @@ public class Client {
 
             System.out.println("Connesso al server con IP: " + serverAddress +":"+serverPort);
 
-            client.close();
 
         } catch (UnknownHostException e) {
             System.err.println("Host sconosciuto");
