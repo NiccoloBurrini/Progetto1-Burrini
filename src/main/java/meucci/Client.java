@@ -27,11 +27,11 @@ public class Client {
             stdIn = new BufferedReader(new InputStreamReader(System.in));
 
         } catch (UnknownHostException e) {
-            System.err.println("Host is unknown");
+            System.err.println("Host sconosciuto");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Something went wrong, closing client...");
+            System.out.println("ERRORE");
             System.exit(1);
         }
 
@@ -45,7 +45,7 @@ public class Client {
         try {
             while((userInput = stdIn.readLine()) != null){
                 out.println(userInput);
-                System.out.println("Server: " + in.readLine());
+                System.out.println("Server: " + in.readLine().toUpperCase());
             }
         
         } catch (IOException e) {
