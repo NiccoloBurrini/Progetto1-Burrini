@@ -1,34 +1,60 @@
-package meucci;
+package itismeucci.tpsit;
 
 import java.io.*;
 import java.net.*;
 
 public class Server {
-    public static void main(String[] args) {
-        int port = 6789;
-        
+
+    int port;
+    ServerSocket server;
+    Socket client;
+    BufferedReader stdIn, in;
+    PrintWriter out;
+
+    public Server(int port) {
+
+        this.port = port;
+    }
+
+    public void connect() {
+
         try {
-            ServerSocket server = new ServerSocket(port);
+            server = new ServerSocket(port);
 
-            Socket client = server.accept();            
+            client = server.accept();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(client.getOutputStream(), true);
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
+
             System.out.println("Client connesso sulla porta: " + port);
 
-            String inputStr = in.readLine();
-            if(inputStr != null){
-
-                System.out.println("Stringa ricevuta: " + inputStr);
-                out.println(inputStr.toUpperCase());
-            }
-
-            out.close();
-            in.close();
-            server.close();
         } catch (IOException e) {
-
         }
     }
+    
+    public void communicate() {
+
+        try {
+            while (true) {
+                System.out.println("Client: " + in.readLine());
+                out.println(stdIn.readLine().toUpperCase());
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("ERRORE");
+            System.exit(1);
+        }
+    }
+
+    public void closeConnection() {
+        out.close();
+        try {
+            server.close();
+            in.close();
+        } catch (IOException e) {
+        }
+    }
+       
 }

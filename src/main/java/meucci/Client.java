@@ -1,33 +1,56 @@
-package meucci;
+package itismeucci.tpsit;
 
 import java.io.*;
 import java.net.*;
 
 public class Client {
-    public static void main(String[] args) {
-        String serverAddress = "localhost";
-        int serverPort = 6789;
+
+    int serverPort;
+    String serverAddress;
+
+    Socket client;
+    BufferedReader stdIn, in;
+    PrintWriter out;
+
+    public Client(String serverAddress, int serverPort) {
+        this.serverAddress = serverAddress;
+        this.serverPort = serverPort;
+    }
+
+    public Socket connect(){
+
+        try {
+            client = new Socket(serverAddress, serverPort);
+            
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(client.getOutputStream(), true);
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
+
+        } catch (UnknownHostException e) {
+            System.err.println("Host is unknown");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Something went wrong, closing client...");
+            System.exit(1);
+        }
+
+        return client;
+    }
+
+    public void communicate(){
+
+        String userInput;
+            
+        try {
+            while((userInput = stdIn.readLine()) != null){
+                out.println(userInput);
+                System.out.println("Server: " + in.readLine());
+            }
         
-        try (
-            Socket client = new Socket(serverAddress, serverPort);
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
-
-                String userInput;
-            
-                while((userInput = stdIn.readLine()) != null){
-                    out.println(userInput);
-                    System.out.println("Risposta del server " + in.readLine());
-                }
-            
-            String response = in.readLine();
-            System.out.println("Server: " + response); 
-
-            client.close();
         } catch (IOException e) {
-
+                    
         }
     }
+
 }
